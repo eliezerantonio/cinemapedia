@@ -36,10 +36,57 @@ class _HomeViewState extends ConsumerState<_HomeView> {
   @override
   Widget build(BuildContext context) {
     final slideShowMovies = ref.watch(moviesSlideshowProviver);
-    return Column(
-      children: [
-        const CustomAppbar(),
-        MovieSlideshow(movies: slideShowMovies),
+    final nowPlayingMovies = ref.watch(nowPlayingMoviesProvider);
+
+    return CustomScrollView(
+      slivers: [
+        const SliverAppBar(
+          floating: true,
+          flexibleSpace: CustomAppbar(),
+        ),
+        SliverList(
+          delegate: SliverChildBuilderDelegate(
+            childCount: 1,
+            (context, index) {
+              return Column(
+                children: [
+                  MovieSlideshow(movies: slideShowMovies),
+
+                  //*em cinema
+                  MovieHorizontalListView(
+                    movies: nowPlayingMovies,
+                    title: 'Em cinema',
+                    subTitle: '20',
+                    loadNextPage: ref
+                        .read(nowPlayingMoviesProvider.notifier)
+                        .loadNextPage,
+                  ),
+                  //*populares
+
+                  MovieHorizontalListView(
+                    movies: nowPlayingMovies,
+                    title: 'Populares',
+                    subTitle: '20',
+                    loadNextPage: ref
+                        .read(nowPlayingMoviesProvider.notifier)
+                        .loadNextPage,
+                  ),
+                  const SizedBox(height: 10),
+
+                  MovieHorizontalListView(
+                    movies: nowPlayingMovies,
+                    title: 'Em cinema',
+                    subTitle: '20',
+                    loadNextPage: ref
+                        .read(nowPlayingMoviesProvider.notifier)
+                        .loadNextPage,
+                  ),
+                  const SizedBox(height: 10),
+                ],
+              );
+            },
+          ),
+        )
       ],
     );
   }
