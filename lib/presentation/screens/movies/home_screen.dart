@@ -35,6 +35,8 @@ class _HomeViewState extends ConsumerState<_HomeView> {
     ref.read(popularMoviesProvider.notifier).loadNextPage();
 
     ref.read(upcomingMoviesProvider.notifier).loadNextPage();
+
+    ref.read(topRatedMoviesProvider.notifier).loadNextPage();
   }
 
   @override
@@ -43,6 +45,8 @@ class _HomeViewState extends ConsumerState<_HomeView> {
     final nowPlayingMovies = ref.watch(nowPlayingMoviesProvider);
     final popularMovies = ref.watch(popularMoviesProvider);
     final upcomingMovies = ref.watch(upcomingMoviesProvider);
+
+    final topRatedMovies = ref.watch(topRatedMoviesProvider);
 
     return CustomScrollView(
       slivers: [
@@ -90,6 +94,18 @@ class _HomeViewState extends ConsumerState<_HomeView> {
                     subTitle: '20',
                     loadNextPage:
                         ref.read(upcomingMoviesProvider.notifier).loadNextPage,
+                  ),
+
+                  const SizedBox(height: 10),
+
+                  //* topRatedMovies
+
+                  MovieHorizontalListView(
+                    movies: topRatedMovies,
+                    title: 'Mais votado',
+                    subTitle: '20',
+                    loadNextPage:
+                        ref.read(topRatedMoviesProvider.notifier).loadNextPage,
                   ),
 
                   const SizedBox(height: 10),
