@@ -79,17 +79,19 @@ class _HomeViewState extends ConsumerState<_HomeView> {
                     loadNextPage:
                         ref.read(popularMoviesProvider.notifier).loadNextPage,
                   ),
+
                   const SizedBox(height: 10),
 
                   //*upcomingMovies
 
                   MovieHorizontalListView(
-                    movies: nowPlayingMovies,
+                    movies: upcomingMovies,
                     title: 'próximos',
                     subTitle: '20',
                     loadNextPage:
                         ref.read(upcomingMoviesProvider.notifier).loadNextPage,
                   ),
+
                   const SizedBox(height: 10),
                 ],
               );
