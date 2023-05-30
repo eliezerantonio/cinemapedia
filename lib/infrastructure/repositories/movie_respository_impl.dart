@@ -26,4 +26,14 @@ class MovieRepositoryImpl implements MoviesRepository {
   Future<List<MovieEntity>> getTopRated({int page = 1}) {
     return datasource.getTopRated(page: page);
   }
+
+  @override
+  Future<MovieEntity> getMovieById(String id) {
+    return datasource.getMovieById(id);
+  }
+
+  @override
+  Future<List<MovieEntity>> searchMovies(String query) {
+    return datasource.searchMovies(query);
+  }
 }
