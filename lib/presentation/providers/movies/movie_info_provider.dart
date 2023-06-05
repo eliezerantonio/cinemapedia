@@ -1,7 +1,8 @@
-import 'package:cinemapedia/presentation/providers/providers.dart';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../domain/entities/movie_entity.dart';
+import '../providers.dart';
 final movieInfoProvider = StateNotifierProvider<MovieMapNotifier, Map<String, MovieEntity>>((ref){
   
   final movieRepository = ref.watch( movieRepositoryProvider );
