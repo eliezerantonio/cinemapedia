@@ -1,55 +1,28 @@
-import 'package:cinemapedia/presentation/views/home_views/favorites_view.dart';
-import 'package:cinemapedia/presentation/views/home_views/home_view.dart';
 import 'package:go_router/go_router.dart';
 
 import '/presentation/screens/screens.dart';
 
 final appRouter = GoRouter(
-  initialLocation: '/',
+  initialLocation: '/home/0',
   routes: [
-    ShellRoute(
-        builder: (context, state, child) {
-          return HomeScreen(viewChild: child);
+    GoRoute(
+        path: '/home/:page',
+        name: HomeScreen.name,
+        builder: (context, state) {
+          final pageIndex = state.pathParameters['page'] ?? '0';
+
+          return HomeScreen(pageIndex: int.parse(pageIndex));
         },
         routes: [
           GoRoute(
-              path: '/',
-              builder: (context, state) {
-                return const HomeView();
-              },
-              routes: [
-                GoRoute(
-                  path: 'movie/:id',
-                  name: MovieScreen.name,
-                  builder: (context, state) {
-                    final movieId = state.pathParameters['id'] ?? 'no-id';
-                    return MovieScreen(movieId: movieId);
-                  },
-                )
-              ]),
-          GoRoute(
-            path: '/favorites',
+            path: 'movie/:id',
+            name: MovieScreen.name,
             builder: (context, state) {
-              return const FavoritesView();
+              final movieId = state.pathParameters['id'] ?? 'no-id';
+              return MovieScreen(movieId: movieId);
             },
           )
-        ])
-
-    // rotas pai e filho
-
-    // GoRoute(
-    //     path: '/',
-    //     name: HomeScreen.name,
-    //     builder: (context, state) => const HomeScreen(viewChild: HomeView()),
-    //     routes: [
-    //       GoRoute(
-    //         path: 'movie/:id',
-    //         name: MovieScreen.name,
-    //         builder: (context, state) {
-    //           final movieId = state.pathParameters['id'] ?? 'no-id';
-    //           return MovieScreen(movieId: movieId);
-    //         },
-    //       )
-    //     ]),
+        ]),
+    GoRoute(path: '/', redirect: (_, __) => '/home/0')
   ],
 );
