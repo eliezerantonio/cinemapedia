@@ -2,6 +2,7 @@ import 'package:cinemapedia/presentation/providers/storage/favorites_movies_prov
 import 'package:cinemapedia/presentation/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 class FavoritesView extends ConsumerStatefulWidget {
   const FavoritesView({super.key});
@@ -37,6 +38,30 @@ class _FavoritesViewState extends ConsumerState<FavoritesView> {
   @override
   Widget build(BuildContext context) {
     final favoritesMovies = ref.watch(favoriteMoviesProvider).values.toList();
+
+    if (favoritesMovies.isEmpty) {
+      final colors = Theme.of(context).colorScheme;
+      return Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Icon(
+              Icons.favorite_outline_sharp,
+              color: colors.primary,
+            ),
+            const SizedBox(height: 10),
+            const Text('Sem filmes favoritos'),
+            const SizedBox(height: 20),
+            FilledButton.tonal(
+                onPressed: () {
+                  context.push('/home/0');
+                },
+                child: const Text('Voltar'))
+          ],
+        ),
+      );
+    }
     return Scaffold(
       body: MovieMasonry(
         movies: favoritesMovies,
